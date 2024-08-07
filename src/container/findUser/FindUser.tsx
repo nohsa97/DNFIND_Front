@@ -12,20 +12,19 @@ import neopleAPI, {
   FindedDTO,
   FindUserData,
 } from "../../api/neopleAPI/neopleAPI";
-import { SelectHTMLAttributes, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SERVER from "../../enum/ServerList";
-import {
-  SelectChangeEvent,
-  SelectInputProps,
-} from "@mui/material/Select/SelectInput";
+import { SelectChangeEvent } from "@mui/material/Select/SelectInput";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 const FindUser = () => {
   const [checkUser, setCheckUser] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const [inputServer, setInputServer] = useState<string>("");
-
   const [charList, setCharList] = useState<FindedDTO[]>([]);
+
+  const navigate = useNavigate();
 
   const test = async (evenvt: React.FormEvent<HTMLFormElement>) => {
     evenvt.preventDefault();
@@ -44,9 +43,7 @@ const FindUser = () => {
       let testDataList: FindedDTO[] = [];
       setCheckUser(true);
 
-      // console.log(result.data);
-
-      result.data.map((item: FindedDTO) => {
+      result.data.forEach((item: FindedDTO) => {
         let testData: FindedDTO = {
           serverId: "",
           characterId: "",
@@ -56,11 +53,14 @@ const FindUser = () => {
           jobGrowId: "",
           jobName: "",
           jobGrowName: "",
+          fame: 0,
         };
         testData.serverId = item.serverId;
         testData.characterId = item.characterId;
         testData.characterName = item.characterName;
         testData.jobName = item.jobName;
+        testData.fame = item.fame;
+        testData.jobGrowName = item.jobGrowName;
         testDataList.push(testData);
       });
 
@@ -74,6 +74,14 @@ const FindUser = () => {
 
   const handleServer = (event: SelectChangeEvent) => {
     setInputServer(event.target.value as string);
+  };
+
+  // const setUserServer = (serverId: string) => {
+  //   // const userServer
+  // };
+
+  const movePageUserInfo = () => {
+    navigate("/userInfo");
   };
 
   return (
@@ -118,16 +126,34 @@ const FindUser = () => {
           {checkUser === true ? (
             <div className={styled.charList}>
               {charList.map((item, index) => (
-                <div className={styled.userInfo} key={index}>
-                  <div className={styled.tests}>
+                <div
+                  className={styled.userInfo}
+                  key={index}
+                  onClick={movePageUserInfo}
+                >
+                  <div className={styled.userImgBox}>
                     <img
+                      className={styled.serverIcon}
+                      src={`./icon/server/${item.serverId}.png`}
+                      alt="서버아이콘"
+                    />
+                    <img
+                      alt="유저 이미지"
+                      className={styled.userImg}
                       src={`https://img-api.neople.co.kr/df/servers/${item.serverId}/characters/${item.characterId}?zoom=1`}
-                      // className={styled.charImg}
                     />
                   </div>
-                  <div>{item.serverId}</div>
-                  <div>{item.characterName}</div>
-                  <div>{item.jobName}</div>
+
+                  <div className={styled.userName}>{item.characterName}</div>
+                  <div className={styled.userJobName}>{item.jobGrowName}</div>
+                  <div className={styled.userFame}>
+                    <img
+                      src="./icon/ico_fame.png"
+                      alt="명성아이콘"
+                      className={styled.fameIcon}
+                    />
+                    {item.fame ? item.fame : "X"}
+                  </div>
                 </div>
               ))}
             </div>

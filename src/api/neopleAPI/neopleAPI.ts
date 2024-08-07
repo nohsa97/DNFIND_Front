@@ -1,5 +1,4 @@
 import axios from "axios";
-import axiosInstance from "../baseOption/axiosInstance";
 
 export interface FindUserData {
   serverId: string;
@@ -15,6 +14,7 @@ export interface FindedDTO {
   jobGrowId: string;
   jobName: string;
   jobGrowName: string;
+  fame: number;
 }
 
 const neopleAPI = async (userData: FindUserData) => {
