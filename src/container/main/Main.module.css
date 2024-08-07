@@ -1,0 +1,38 @@
+.mainBox {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.header {
+  height: 10vh;
+}
+
+.backgroundImg {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+.mainSection {
+  position: relative;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+  width: 90%;
+  margin: 5vh auto;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 3rem;
+}
+
+.text {
+  font-size: 1.5rem;
+}

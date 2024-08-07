@@ -1,0 +1,50 @@
+.section {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.inputForm {
+  /* margin: auto; */
+  padding: 10px;
+}
+
+.charList {
+  justify-content: center;
+  margin: auto;
+  display: grid;
+  width: 80vw;
+  grid-template-columns: repeat(5, 200px);
+  grid-template-rows: repeat(5, 300px);
+  gap: 5px;
+}
+.tests {
+  max-width: 100px;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.charImg {
+  object-fit: cover;
+}
+
+/* 아래는 찾고나서 사용할 css */
+.userInfoBox {
+  border: 1px solid black;
+  border-radius: 12px;
+  width: 80%;
+  /* height: 50vh; */
+  margin: auto;
+  padding: 20px;
+  display: flex;
+}
+
+.character {
+  border: 1px solid black;
+  border-radius: 12px;
+}
+
+.userInfo {
+  border: 1px solid black;
+  border-radius: 12px;
+}
