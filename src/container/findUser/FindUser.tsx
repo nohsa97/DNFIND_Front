@@ -141,38 +141,3 @@ const FindUser = () => {
 };
 
 export default FindUser;
-
-//추후 밖으로 빼낼 예정.
-// <div className={styled.userInfoBox}>
-//   <div className={styled.character}>
-//     <img
-//       src={`https://img-api.neople.co.kr/df/servers/cain/characters/${userImg}?zoom=2`}
-//     />
-//   </div>
-//   <div className={styled.userInfo}>
-//     <div className={styled.Name}>{userName}</div>
-//     <div className={styled.Item}>{characterId}</div>
-//   </div>
-// </div>
-
-//초기 코드
-// result.map((item: FindedDTO) => {
-//   let testData: FindedDTO = {
-//     serverId: "",
-//     characterId: "",
-//     characterName: "",
-//     level: 0,
-//     jobId: "",
-//     jobGrowId: "",
-//     jobName: "",
-//     jobGrowName: "",
-//     fame: 0,
-//   };
-//   testData.serverId = item.serverId;
-//   testData.characterId = item.characterId;
-//   testData.characterName = item.characterName;
-//   testData.fame = item.fame;
-//   testData.jobName = item.jobName;
-//   testDataList.push(testData);
-//   setCharList(testDataList);
-// });
