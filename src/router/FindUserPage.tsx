@@ -1,14 +1,14 @@
 import React from "react";
-import Main from "../container/main/Main";
 import Navigator from "../component/navigator/Navigator";
+import FindUser from "../container/findUser/FindUser";
 
-const MainPage = () => {
+const FindUserPage = () => {
   return (
     <div>
       <Navigator />
-      <Main />
+      <FindUser />
     </div>
   );
 };
 
-export default MainPage;
+export default FindUserPage;
