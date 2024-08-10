@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Navigator from "../../component/navigator/Navigator";
 import styled from "./Main.module.css";
 
 export class Main extends Component {
@@ -7,9 +6,6 @@ export class Main extends Component {
     return (
       <div className={styled.mainBox}>
         {/* 헤더 부분 */}
-        <div className={styled.header}>
-          <Navigator />
-        </div>
 
         <div className={styled.section}>
           {/* 배경 이미지 */}

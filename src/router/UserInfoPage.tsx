@@ -1,14 +1,14 @@
 import React from "react";
-import Main from "../container/main/Main";
 import Navigator from "../component/navigator/Navigator";
+import UserInfo from "../container/userInfo/UserInfo";
 
-const MainPage = () => {
+const UserInfoPage = () => {
   return (
     <div>
       <Navigator />
-      <Main />
+      <UserInfo />
     </div>
   );
 };
 
-export default MainPage;
+export default UserInfoPage;

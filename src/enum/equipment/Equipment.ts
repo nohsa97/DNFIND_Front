@@ -1,0 +1,15 @@
+export enum EQUIPMENT {
+  WEAPON,
+  TITLE,
+  JACKET,
+  SHOULDER,
+  PANTS,
+  SHOES,
+  WAIST,
+  AMULET,
+  WRIST,
+  RING,
+  SUPPORT,
+  MAGIC_STON,
+  EARRING,
+}
