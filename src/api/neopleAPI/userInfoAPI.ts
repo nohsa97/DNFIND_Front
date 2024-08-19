@@ -10,6 +10,17 @@ export interface EquimentDTO {
   slotId: string;
   itemId: string;
   itemName: string;
+  enchant: Enchant;
+}
+
+interface Enchant {
+  status: Status[];
+  explain: string;
+}
+
+export interface Status {
+  name: string;
+  value: number;
 }
 
 const userInfoAPI = async (userData: UserInfoDTO) => {
@@ -21,7 +32,7 @@ const userInfoAPI = async (userData: UserInfoDTO) => {
   try {
     const response = await axios.get(testURL);
 
-    return response.data.equipment;
+    return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;

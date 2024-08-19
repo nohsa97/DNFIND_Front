@@ -28,6 +28,8 @@ const neopleAPI = async (userData: FindUserData) => {
     return response;
   } catch (error) {
     console.error("Error fetching data:", error);
+
+    return false;
     throw error;
   }
 };

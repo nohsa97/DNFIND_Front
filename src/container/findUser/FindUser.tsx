@@ -62,10 +62,10 @@ const FindUser = () => {
 
     const result = await neopleAPI(userData);
 
-    if (result.status !== 200) {
+    if (result !== false && result.status !== 200) {
       console.log("실패");
       setCheckUser(false);
-    } else {
+    } else if (result !== false) {
       let testDataList: FindedDTO[] = [];
       setCheckUser(true);
 
