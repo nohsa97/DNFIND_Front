@@ -2,23 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import userInfoAPI, {
   EquimentDTO,
-  Status,
+  UserDTO,
   UserInfoDTO,
 } from "../../api/neopleAPI/userInfoAPI";
 
 import styled from "./UserInfo.module.css";
+import { enchantSum } from "../../hooks/equipment/useEquipment";
 
 const UserInfo = () => {
-  const [params, setParams] = useSearchParams();
-
+  const [params] = useSearchParams();
   const [userEquipment, setUserEquipment] = useState<EquimentDTO[]>([]);
+  const [userInfo, setUserInfo] = useState<UserInfoDTO>();
 
   const getUserInfo = async () => {
     const userServer = params.get("server");
     const userId = params.get("charId");
 
     if (userServer && userId) {
-      const UserInfoDTO: UserInfoDTO = {
+      const UserInfoDTO: UserDTO = {
         serverId: userServer,
         characterId: userId,
       };
@@ -26,6 +27,15 @@ const UserInfo = () => {
       const result = await userInfoAPI(UserInfoDTO);
 
       const equimentList: EquimentDTO[] = [];
+
+      //유저 정보 저장
+      const resultUserData: UserInfoDTO = {
+        adventureName: result.adventureName,
+        characterName: result.characterName,
+        jobGrowName: result.jobGrowName,
+        fame: result.fame,
+      };
+      setUserInfo(resultUserData);
 
       for (const key in result.equipment) {
         const tempData: EquimentDTO = {
@@ -35,112 +45,60 @@ const UserInfo = () => {
           enchant: result.equipment[key].enchant,
         };
 
-        const fixData = enchantSum(tempData);
-
-        equimentList.push(fixData);
+        enchantSum(tempData);
+        equimentList.push(tempData);
       }
-
       setUserEquipment(equimentList);
     }
   };
 
-  const enchantSum = (data: EquimentDTO) => {
-    for (const key in data) {
-      const newLs: Status[] = [];
-      let newData = {
-        ElementIncrease: 0,
-        Stat: 0,
-        Attack: 0,
-        Critical: 0,
-      };
-
-      if (data.enchant === undefined) continue;
-
-      const temp = data.enchant.status;
-      for (const key in temp) {
-        if (
-          [
-            "명속성강화",
-            "화속성강화",
-            "수속성강화",
-            "암속성강화",
-            "모든 속성 강화",
-          ].includes(temp[key].name)
-        ) {
-          newData.ElementIncrease = temp[key].value;
-        } else if (
-          ["물리 공격력", "마법 공격력", "독립 공격력"].includes(temp[key].name)
-        )
-          newData.Attack = temp[key].value;
-        else if (["힘", "지능", "정신력", "체력"].includes(temp[key].name))
-          newData.Stat = temp[key].value;
-        else if (
-          ["물리 크리티컬 히트", "마법 크리티컬 히트"].includes(temp[key].name)
-        ) {
-          newData.Critical = temp[key].value;
-        } else {
-          newLs.push(temp[key]);
-        }
-      }
-
-      if (newData.ElementIncrease > 0) {
-        const newList: Status = {
-          name: "속성 강화",
-          value: newData.ElementIncrease,
-        };
-        newLs.push(newList);
-      }
-      if (newData.Attack > 0) {
-        const newList: Status = {
-          name: "공격력",
-          value: newData.Attack,
-        };
-        newLs.push(newList);
-      }
-
-      if (newData.Stat > 0) {
-        const newList: Status = {
-          name: "스탯",
-          value: newData.Stat,
-        };
-        newLs.push(newList);
-      }
-
-      if (newData.Critical !== 0) {
-        const newList: Status = {
-          name: "크리티컬",
-          value: newData.Critical,
-        };
-        newLs.push(newList);
-      }
-
-      data.enchant.status = newLs;
-    }
-
-    return data;
-  };
-
   useEffect(() => {
+    // eslint-disable-next-line
     getUserInfo();
   }, []);
 
   return (
-    <div>
+    <div className={styled.userInfoPage}>
       <div className={styled.userBox}>
-        <div className={styled.userImg}>
+        <div className={styled.userBaseInfo}>
+          <div className={styled.userName}>{userInfo?.characterName}</div>
+          <div className={styled.userAdventureBox}>
+            <img
+              className={styled.advenIcon}
+              src="./icon/advenIcon.png"
+              alt="userImg"
+            />
+            <div className={styled.userAdventure}>
+              {userInfo?.adventureName}
+            </div>
+          </div>
+
           <img
+            className={styled.userImg}
             src={`https://img-api.neople.co.kr/df/servers/${params.get(
               "server"
             )}/characters/${params.get("charId")}?zoom=2`}
+            alt="userImg"
           />
+          <div className={styled.userJF}>
+            <div>{userInfo?.jobGrowName}</div>
+            <img
+              className={styled.advenIcon}
+              src="./icon/ico_fame.png"
+              alt="userImg"
+            />
+            <div>{userInfo?.fame}</div>
+          </div>
         </div>
         <div className={styled.userEquip}>
+          장비
           {userEquipment.map((item) => (
             <div className={styled.itemSlot} key={item.slotId}>
               <div className={styled.itemInfo} key={item.itemId + "info"}>
                 <img
                   key={item.itemId + "infoImg"}
                   src={`https://img-api.neople.co.kr/df/items/${item.itemId}`}
+                  alt="itemImg"
                 />
                 <div className={styled.itemName} key={item.itemId + "infoId"}>
                   {item.itemName}
