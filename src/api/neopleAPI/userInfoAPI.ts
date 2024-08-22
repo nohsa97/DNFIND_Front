@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FindUserData } from "./neopleAPI";
 
-export interface UserInfoDTO {
+export interface UserDTO {
   serverId: string;
   characterId: string;
 }
@@ -23,7 +23,15 @@ export interface Status {
   value: number;
 }
 
-const userInfoAPI = async (userData: UserInfoDTO) => {
+export interface UserInfoDTO {
+  adventureName: string;
+  characterName: string;
+
+  jobGrowName: string;
+  fame: number;
+}
+
+const userInfoAPI = async (userData: UserDTO) => {
   console.log("통신시작");
   const testURL =
     process.env.REACT_APP_API_BASE_URL +
@@ -31,6 +39,8 @@ const userInfoAPI = async (userData: UserInfoDTO) => {
 
   try {
     const response = await axios.get(testURL);
+
+    console.log(response);
 
     return response.data;
   } catch (error) {
